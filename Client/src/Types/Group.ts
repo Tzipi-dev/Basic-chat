@@ -8,6 +8,4 @@ export type Group ={
     createdAt: Date;
     description?: string;
     admin: User;
-
-    
 }
