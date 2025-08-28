@@ -1,0 +1,166 @@
+:root {
+    --sb-w: 260px;
+    --sb-bg: #ffffff;
+    --sb-fg: #1f2937;
+    --sb-muted: #6b7280;
+    --sb-border: #e5e7eb;
+    --sb-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --sb-bg: #0b1220;
+        --sb-fg: #e5e7eb;
+        --sb-muted: #9ca3af;
+        --sb-border: #1f2937;
+        --sb-shadow: 0 10px 28px rgba(0, 0, 0, .35);
+    }
+}
+
+/* סיידבר שמאלי קבוע */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--sb-w);
+    background: var(--sb-bg);
+    color: var(--sb-fg);
+    border-right: 1px solid var(--sb-border);
+    box-shadow: var(--sb-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 14px;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    z-index: 40;
+    padding-top: 7vh;
+    background-color: rgb(73, 92, 86);
+}
+
+/* כותרת */
+.sidebar-header {
+    font-size: 1.125rem;
+    font-weight: 100;
+    letter-spacing: .3px;
+    margin-bottom: 6px;
+}
+
+/* ניווט */
+.sidebar-nav {
+    display: grid;
+    gap: 6px;
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: var(--sb-fg);
+    text-decoration: left;
+    line-height: 1.35;
+    transition: transform .12s ease, background-color .12s ease, color .12s ease;
+    font-weight: 400;
+    text-align: left;
+    margin-left: 2vw;
+      border-bottom: 1px solid rgba(0,0,0,0.1); 
+}
+
+.sidebar-nav a:hover {
+    /* background: color-mix(in oklab, var(--sb-fg) 10%, var(--sb-bg)); */
+    
+ background-color: rgb(80, 97, 92) !important; /* ירוק כהה, עדיפות גבוהה */
+  color: white !important;
+  transform: translateY(-1px);
+}
+
+.sidebar-nav a:active {
+    transform: translateX(1px) scale(.995);
+}
+
+/* תוכן העמוד – יתפוס את כל החלל אחרי הסיידבר */
+.page-content {
+    position: absolute;
+    top: 0;
+    left: var(--sb-w);
+    right: 0;
+    bottom: 0;
+    padding: 28px 24px;
+    color: var(--sb-fg);
+
+    /* רקע בהיר בהשראת הרים */
+    background: linear-gradient(to bottom, #f5f7fa, #e0e4e8);
+
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+/* רספונסיבי: מסכים צרים – מצב קומפקטי ברוחב 72px עם הרחבה בריחוף */
+@media (max-width: 900px) {
+    :root {
+        --sb-w: 72px;
+    }
+
+    .sidebar {
+        padding: 12px 8px;
+    }
+
+    .sidebar-header {
+        display: none;
+    }
+
+    .sidebar-nav a {
+        padding: 10px 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sidebar {
+        width: var(--sb-w);
+    }
+
+    .sidebar:hover {
+        width: 240px;
+    }
+
+    .page-content {
+        left: var(--sb-w);
+    }
+
+.rounded-rectangle {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: transparent;
+  color: #1f2937;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  border: 2px solid #16a34a;
+}
+
+.rounded-rectangle:hover {
+  background-color: #166534 !important; /* ירוק כהה, עדיפות גבוהה */
+  color: white !important;
+  transform: translateY(-2px);
+}
+
+
+}
+
+/* תמיכה יפה לגלילה */
+.sidebar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--sb-fg) 20%, transparent);
+    border-radius: 999px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}

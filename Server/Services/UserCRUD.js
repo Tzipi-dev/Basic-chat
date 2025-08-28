@@ -1,5 +1,5 @@
-const User = require('../Types/User');
-
+// const User = require('../Types/User');
+const User = require('../Types/User.js');
 
 async function createUser(data) {
     try {

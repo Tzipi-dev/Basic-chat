@@ -1,4 +1,4 @@
-export type Massage={
+export interface Massage{
     id: string;
     senderId: string;
     receiverId: string; 
