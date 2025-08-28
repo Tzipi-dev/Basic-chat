@@ -1,6 +1,6 @@
 import type { User } from "./User";
 
-export type Group ={
+export interface Group {
     id: string;
     name: string;
     avatarUrl: string;

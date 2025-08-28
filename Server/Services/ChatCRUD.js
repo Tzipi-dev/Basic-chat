@@ -1,4 +1,4 @@
-const Chat = require("./models/Chat");
+const Chat = require('../Types/Chat.js');
 
 // CREATE - יצירת צ'אט חדש
 async function createChat(data) {

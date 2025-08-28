@@ -1,4 +1,4 @@
-const Massage = require("./models/Massage");
+const Massage = require('../Types/Massage');
 
 // CREATE - יצירת מסר חדש
 async function createMassage(data) {

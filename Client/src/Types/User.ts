@@ -1,6 +1,6 @@
 import type { Group } from "./Group";
 
-export type User = {
+export interface User  {
   id: string;
     name: string;
     avatarUrl: string;
@@ -8,7 +8,7 @@ export type User = {
     lastActive: Date;
     email: string;
     phoneNumber?: string;
-    freinds?: User[];
+    friends?: User[];
     groups?: Group[];
 
 }
