@@ -1,15 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.css';
 import { SlArrowRight, SlArrowDown } from "react-icons/sl";
-import { Chat } from '../Types/Chat';
+import { auth, provider } from '../firebase';
+import { signInWithPopup, signOut, User } from "firebase/auth";
 
 const HomePage = () => {
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [directOpen, setDirectOpen] = useState(false);
   const [groupOpen, setGroupOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    // מאזין לשינויים בכניסה
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setCurrentUser(user);
+        localStorage.setItem('currentUser', JSON.stringify(user));
+      } else {
+        setCurrentUser(null);
+        localStorage.removeItem('currentUser');
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogin = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // המשתמש כבר נשמר ב-state דרך ה-onAuthStateChanged
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handleLogout = () => {
+    signOut(auth).catch(console.error);
+  };
 
   // רשימות דינמיות
-  const shortcutsList= [
+  const shortcutsList = [
     { label: 'קישור 1', type: 'shortcut' },
     { label: 'קישור 2', type: 'shortcut' },
     { label: 'קישור 3', type: 'shortcut' },
@@ -29,7 +59,6 @@ const HomePage = () => {
     { label: 'קבוצה 4', type: 'group' },
   ];
 
-  // פונקציה ליצירת הקישורים
   const renderLinks = (list) => (
     list.map((item, index) => (
       <a key={index} href="#" className='rounded-rectangle'>
@@ -38,6 +67,19 @@ const HomePage = () => {
     ))
   );
 
+  // אם אין משתמש מחובר
+  if (!currentUser) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column' }}>
+        <h2>אנא התחברו</h2>
+        <button onClick={handleLogin} style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}>
+          התחבר עם Google
+        </button>
+      </div>
+    );
+  }
+
+  // אם המשתמש מחובר → מציגים את HomePage הרגיל
   return (
     <div>
       <div className="sidebar">
@@ -92,6 +134,7 @@ const HomePage = () => {
       <main className="page-content">
         <h1>ברוכים הבאים לדף הבית</h1>
         <p>זהו דף הבית של האתר שלנו. כאן תוכלו למצוא מידע על הפרויקטים שלנו, אודותינו ודרכים ליצור קשר.</p>
+        <button onClick={handleLogout} style={{ marginTop: '20px' }}>התנתק</button>
       </main>
     </div>
   );
